@@ -1,21 +1,21 @@
 function [Qloss] = heat_loss(theta, theta_1, P, T, V)
 
-N =2000;
+global E
+N =E.N;
 gamma =1.35;
-B = .08255;
-S = .1143;
-rc = 8.5;
-Tw = 373;
+B = E.B;
+S = E.S;
+Tw = E.Tw;
 
 
-Vd = S*pi*(B^2)/4;
-Vc = Vd/(rc -1);
+Vd = E.Vd;
+Vc = E.Vc;
 
-Pinit = 95 *1000;
-Tinit = 294;
+Pinit = E.Patm;
+Tinit = E.Tatm;
 
 Vinit = Vc + Vd;
-theta0 = 15;
+theta0 = E.teta0;
 
 
 Sp__ = 2*S*(N/60);
@@ -42,7 +42,7 @@ Aw = Ap + Ach +(4*V/B);
 
 dqdt = h * Aw *(T- Tw);
 
-Qloss = dqdt * (theta - theta_1)/6/N;
+Qloss = dqdt *(theta - theta_1)/6/N;
 end
 
 

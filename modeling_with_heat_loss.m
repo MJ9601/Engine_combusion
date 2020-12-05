@@ -1,23 +1,29 @@
 clear
 clc
 
-B = .08255;
-S = .1143;
-l =.254;
-rc = 8.5;
 
-N = 2000;
+global E 
+
+[E] = Engine_CFR;
+
+
+B = E.B;
+S = E.S;
+l =E.l;
+rc = E.rc;
+
+N = E.N;
 a = S/2;
 R = l/a;
-Vd = 2*a*pi*(B^2)/4;
-Vc = Vd/(rc -1);
-nw = 3;
-aw =5;
+Vd = E.Vd;
+Vc = E.Vc;
+nw = E.nw;
+aw =E.aw;
 
 % countncountt value
-Pinit = 95 *1000;
-Tinit = 294;
-phi = .8;
+Pinit = E.Patm;
+phi = E.phi;
+Tinit = E.Tatm;
 Vinit = Vc + Vd;
 
 % constant value
@@ -49,8 +55,8 @@ T = zeros(360,1);
 P(1) = Pinit;
 V(1) = Vinit;
 T(1) = Tinit;
-theta0 = 15;
-deltheta = 50;
+theta0 = E.teta0;
+deltheta = E.delteta;
 
 theta = -180:1:180;
 mb_1 =0;
@@ -84,7 +90,7 @@ end
 
 
 V(:) = V(:)*1000;
-P(:) = P(:)/101000;
+P(:) = P(:)/100;
 thetax = -180:1:180;
 
 
@@ -131,23 +137,29 @@ max(T)
 clear
 
 
-B = .08255;
-S = .1143;
-l =.254;
-rc = 8.5;
 
-N = 2000;
+global E 
+
+[E] = Engine_CFR;
+
+
+B = E.B;
+S = E.S;
+l =E.l;
+rc = E.rc;
+
+N = E.N;
 a = S/2;
 R = l/a;
-Vd = 2*a*pi*(B^2)/4;
-Vc = Vd/(rc -1);
-nw = 3;
-aw =5;
+Vd = E.Vd;
+Vc = E.Vc;
+nw = E.nw;
+aw =E.aw;
 
 % countncountt value
-Pinit = 95 *1000;
-Tinit = 294;
-phi = .8;
+Pinit = E.Patm;
+phi = E.phi;
+Tinit = E.Tatm;
 Vinit = Vc + Vd;
 
 % constant value
@@ -157,8 +169,6 @@ Rc = 8.314;
 n = Pinit * Vinit/Rc/ Tinit;
 LHV = 43.448;
 AF_st_mass = 14.7;
-theta0 = 15;
-deltheta = 50;
 
 fuel_mass = phi * mass_to / AF_st_mass;  % kg
 
@@ -175,17 +185,18 @@ w2 = 0;
 V = zeros(360,1);
 P = zeros(360,1);
 T = zeros(360,1);
-count = 2;
+
 
 % countncounttcountalcountzatcounton
 P(1) = Pinit;
 V(1) = Vinit;
 T(1) = Tinit;
+theta0 = E.teta0;
+deltheta = E.delteta;
 
-
-theta = -180:1:180;
 mb_1 =0;
 Qloss__ = zeros(1, 360);
+theta = -180:1:180;
 
 for count=2: size(theta,2)
     V(count) = Vc*(1 + 0.5 *(rc-1)*(R + 1 - cosd(theta(count)) - sqrt(R^2 - (sind(theta(count)))^2)));
@@ -222,7 +233,7 @@ end
 
 
 V(:) = V(:)*1000;
-P(:) = P(:)/101000;
+P(:) = P(:)/100;
 thetax = -180:1:180;
 
 
